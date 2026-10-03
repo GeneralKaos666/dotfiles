@@ -6,7 +6,7 @@ set -u
 shopt -s dotglob nullglob # globs must match dotfiles (shell/bash/* etc.)
 
 DOTFILES="$(cd "$(dirname "$0")" && pwd)"
-BACKUP="$HOME/.dotfiles.bak-$(date +%F-%H%M)"
+BACKUP="$HOME/.dotfiles.bak-$(date +%F-%H%M%S)-$$"
 
 # Non-Termux fallback: no $PREFIX and no termux-reload-settings on PATH.
 # Print manual cp instructions, change nothing, exit 0.
