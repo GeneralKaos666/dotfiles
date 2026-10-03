@@ -1,0 +1,66 @@
+# Shared shell profile - sourced by both bash and zsh
+# Created by aidevops setup to preserve customizations across shell switches
+# Edit this file for settings you want in BOTH bash and zsh
+# Shell-specific settings go in ~/.bashrc or ~/.zshrc
+
+
+# From .bash_profile
+export NODE_OPTIONS="${NODE_OPTIONS:+$NODE_OPTIONS }--require $HOME/.copilot-hooks/keytar-bypass.js"
+
+# From .bashrc
+export LS_COLORS="di=95"
+export PATH=$PATH:$JAVA_HOME/bin
+export PATH=$PATH:/data/data/com.termux/files/home/termux/android-studio/bin
+export FLUTTER_ROOT=$PREFIX/opt/flutter
+export PATH=$FLUTTER_ROOT/bin:$PATH
+export ANDROID_HOME="$PREFIX/opt/android-sdk"
+export ANDROID_SDK_ROOT=$ANDROID_HOME
+export PATH=$ANDROID_HOME/platform-tools:$PATH
+export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/29.0.14206865
+export CMAKE_HOME=$ANDROID_HOME/cmake/4.1.2/bin
+export PATH=$CMAKE_HOME:$PATH
+export LSP_WS_PROXY="/data/data/com.termux/files/home/Flutter_studio_setup/lsp-ws-proxy"
+export JAVA_HOME="$PREFIX/lib/jvm/java-25-openjdk"
+export ANDROID_SDK_ROOT="$PREFIX/opt/android-sdk"
+export ANDROID_HOME="$ANDROID_SDK_ROOT"
+export ANDROID_NDK_HOME="$PREFIX/opt/android-ndk/android-ndk-r29/"
+export ANDROID_NDK_TOOLCHAINS="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-aarch64"
+export PATH="$JAVA_HOME/bin:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_NDK_HOME:$ANDROID_NDK_TOOLCHAINS/bin:$PATH"
+export EDITOR=neovim
+export PATH="$PREFIX/opt/flutter/bin:$PATH"
+alias ll='ls -la'
+alias update='pkg update -y && pkg upgrade -y'
+export PATH="$PATH:$HOME/.rvm/bin"
+export QT_QPA_PLATFORMTHEME=qt6ct
+export SSL_CERT_FILE=$PREFIX/etc/tls/cert.pem
+export REQUESTS_CA_BUNDLE=$PREFIX/etc/tls/cert.pem
+export JAVA_HOME=/data/data/com.termux/files/usr/lib/jvm/java-21-openjdk
+export PATH=$PATH:/data/data/com.termux/files/usr/opt/android-studio/bin
+alias copilot='NODE_OPTIONS="-r /data/data/com.termux/files/home/.copilot-shim.js" copilot'
+export PATH=$PATH:~/.local/bin
+export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
+source $PREFIX/etc/profile.d/flutter.sh
+alias sudo=''
+export NVM_DIR="$HOME/.nvm"
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export GPG_TTY=$(tty)
+source <("/data/data/com.termux/files/usr/bin/ai" completion bash)
+export PATH="~/.kimi-code/bin/:$PATH"
+export PATH="/data/data/com.termux/files/home/.openclaw-android/bin:/data/data/com.termux/files/home/.openclaw-android/node/bin:$HOME/.local/bin:$PATH"
+export TMPDIR="/data/data/com.termux/files/usr/tmp"
+export TMP="$TMPDIR"
+export TEMP="$TMPDIR"
+export OA_GLIBC=1
+export CONTAINER=1
+export CLAWDHUB_WORKDIR="$HOME/.openclaw/workspace"
+export CPATH="$PREFIX/include/glib-2.0:$PREFIX/lib/glib-2.0/include"
+export PATH="$HOME/.local/bin:$HOME/.node_modules/bin:$PATH"
+export PATH=$PATH:~/bin
+alias gg='git-genius'
+export ANDROID_HOME=$HOME/android-sdk
+export ANDROID_SDK_ROOT=$HOME/android-sdk
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+export JAVA_OPTS="-Djava.net.preferIPv4Stack=true"
+export ANDROID_USER_HOME="$HOME/.termux-adb"
