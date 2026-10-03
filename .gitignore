@@ -1,0 +1,24 @@
+# local brainstorming specs — never pushed (per user request)
+docs/superpowers/
+
+# backups and editor noise
+*.bak
+*.backup.*
+*~
+*.swp
+*.log
+
+# secrets — never commit
+.git-credentials
+.env
+.env.*
+*_token*
+*_secret*
+
+# large/local media (keep png/jpg screenshots, ignore video/raw)
+screenshots/*.mp4
+screenshots/*.mov
+
+# OS / Termux noise
+.DS_Store
+Thumbs.db
