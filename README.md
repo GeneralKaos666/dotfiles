@@ -4,9 +4,9 @@
 ![zsh](https://img.shields.io/badge/shell-zsh-blue)
 ![MIT](https://img.shields.io/badge/license-MIT-green)
 
-Neon-on-near-black Termux setup: zsh + custom `td` theme (bash fallback), tmux,
-fastfetch, Neovim snapshot, and the SilkCircuit color family — wired up by a
-backup-safe `install.sh`.
+Neon-on-near-black Termux setup: zsh with custom `td` theme
+(bash fallback), tmux, fastfetch, Neovim snapshot, SilkCircuit colors.
+`install.sh` wires it up.
 
 ## Screenshots
 
@@ -70,16 +70,16 @@ color14=#00ffff
 color15=#e0c0ff
 ```
 
-Five variants ship under `termux/colors/`: vibrant (default), neon, glow, soft, dawn.
+`termux/colors/` holds five variants: vibrant (default), neon, glow, soft, dawn.
 
 ## Features
 
 - zsh first (zinit, plugins, completions), bash fallback, shared aliases
-- Custom `td` prompt theme with exit-status RPROMPT
-- tmux config tuned for Termux touch keyboards
-- fastfetch config in SilkCircuit colors
-- Neovim config snapshot (lazy.nvim, LSP, snippets)
-- Backup-safe installer — existing files are moved aside, never overwritten
+- Custom `td` prompt theme, exit status in RPROMPT
+- tmux config for Termux touch keyboards
+- fastfetch in SilkCircuit colors
+- Neovim snapshot (lazy.nvim, LSP, snippets)
+- Installer moves old files aside, overwrites nothing
 
 ## Contents
 
@@ -99,25 +99,25 @@ Five variants ship under `termux/colors/`: vibrant (default), neon, glow, soft, 
 git clone https://github.com/GeneralKaos666/dotfiles ~/dotfiles && ~/dotfiles/install.sh
 ```
 
-Restart Termux afterwards. Plugin manager (zinit) bootstraps itself on first launch.
+Restart Termux. Zinit pulls plugins on first launch.
 
 ## Termux Notes
 
 - The installer copies `termux/font.ttf` to `~/.termux/font.ttf` and the
-  vibrant variant to `~/.termux/colors.properties` (never symlinked, so theme
-  switchers keep working).
-- Apply colors/font immediately without restarting:
+  vibrant variant to `~/.termux/colors.properties`. Plain copies,
+  no symlinks, so theme switchers keep control.
+- Apply colors/font with no restart:
   `termux-reload-settings`.
-- Other variants (`neon`, `glow`, `soft`, `dawn`) live in
-  `~/dotfiles/termux/colors/` — copy one over `~/.termux/colors.properties`
-  and run `termux-reload-settings` to preview.
+- Other variants (`neon`, `glow`, `soft`, `dawn`) sit in
+  `~/dotfiles/termux/colors/`. Preview: copy one to
+  `~/.termux/colors.properties`, then run `termux-reload-settings`.
 
 ## Restore
 
-Every `install.sh` run moves pre-existing files into a timestamped backup
-directory (`~/.dotfiles.bak-*`). To undo, copy the files back from the newest
+`install.sh` moves old files to a timestamped backup
+directory (`~/.dotfiles.bak-*`). To undo, copy files back from the newest
 backup, e.g. `cp ~/.dotfiles.bak-*/.zshrc ~/`.
 
 ## Credits
 
-Built by GeneralKaos666. SilkCircuit palette, `termux/colors/silkcircuit-*` files, and `fastfetch/config.jsonc` derive from [SilkCircuit](https://github.com/hyperb1iss/silkcircuit) by hyperb1iss (MIT), including the hyperb1iss/silkcircuit generator noted in the fastfetch config header. Released under the MIT License — see [LICENSE](LICENSE).
+GeneralKaos666 built this. The SilkCircuit palette, `termux/colors/silkcircuit-*` files, and `fastfetch/config.jsonc` come from [SilkCircuit](https://github.com/hyperb1iss/silkcircuit) by hyperb1iss (MIT). Generator credit sits in the fastfetch config header. MIT License covers this repo. See [LICENSE](LICENSE).
