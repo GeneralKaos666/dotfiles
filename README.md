@@ -10,15 +10,17 @@ backup-safe `install.sh`.
 
 ## Screenshots
 
-> screenshots pending — drop phone captures here
-
-| Shell | tmux |
+| shell | tmux |
 | --- | --- |
-| ![shell](screenshots/shell.png) | ![tmux](screenshots/tmux.png) |
+| ![shell](screenshots/shell.jpg) | ![tmux](screenshots/tmux.jpg) |
 
-| fastfetch | Palette |
+| fastfetch | nvim |
 | --- | --- |
-| ![fastfetch](screenshots/fastfetch.png) | ![palette](screenshots/palette.png) |
+| ![fastfetch](screenshots/fastfetch.jpg) | ![nvim](screenshots/nvim.jpg) |
+
+| palette |
+| --- |
+| ![palette](screenshots/palette.jpg) |
 
 ## SilkCircuit Palette (vibrant)
 
