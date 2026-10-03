@@ -118,4 +118,4 @@ backup, e.g. `cp ~/.dotfiles.bak-*/.zshrc ~/`.
 
 ## Credits
 
-Built by GeneralKaos666. Released under the MIT License — see [LICENSE](LICENSE).
+Built by GeneralKaos666. SilkCircuit palette and `termux/colors/silkcircuit-*` files derive from [SilkCircuit](https://github.com/hyperb1iss/silkcircuit) by hyperb1iss (MIT). Released under the MIT License — see [LICENSE](LICENSE).
