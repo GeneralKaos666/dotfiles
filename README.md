@@ -1,4 +1,4 @@
-# Termux SilkCircuit Dotfiles
+# Termux Dotfiles
 
 ![Termux](https://img.shields.io/badge/Termux-000000?style=flat&logo=android&logoColor=white)
 ![zsh](https://img.shields.io/badge/shell-zsh-blue)
