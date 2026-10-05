@@ -1,8 +1,11 @@
 # local brainstorming specs — never pushed (per user request)
 docs/superpowers/
+.superpowers/
 
-# backups and editor noise
+# local machine backups — never commit (install.sh uses ~/.dotfiles.bak-*, not ./backups/)
+backups/
 *.bak
+*.bak.*
 *.backup.*
 *~
 *.swp
@@ -14,6 +17,8 @@ docs/superpowers/
 .env.*
 *_token*
 *_secret*
+openclaw.json*
+*openclaw*
 
 # large/local media (keep png/jpg screenshots, ignore video/raw)
 screenshots/*.mp4
