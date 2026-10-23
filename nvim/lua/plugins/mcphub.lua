@@ -3,7 +3,7 @@ return {
     dependencies = {
         "nvim-lua/plenary.nvim",
     },
-    build = "npm install mcp-hub@4.2.1",  -- Pinned, no -g (Termux-safe). Bump deliberately.
+    build = "npm install -g mcp-hub@4.2.1",  -- Pinned global install puts `mcp-hub` on PATH (npm prefix is $PREFIX).
     config = function()
         require("mcphub").setup()
     end

@@ -44,6 +44,11 @@ path=("$HOME/bin" "$HOME/.local/bin" $path)
 export LANG=C.UTF-8
 # LC_ALL intentionally unset (overrides everything, breaks per-category)
 
+
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+
 # -----------------------------------------------------------------------------
 # 3. Zinit bootstrap (ZINIT vars BEFORE source so optimize flag applies)
 # -----------------------------------------------------------------------------
@@ -144,6 +149,9 @@ unset ZI_REPO
 # -----------------------------------------------------------------------------
 # 6. Completion system (cached; restores plugin completions)
 # -----------------------------------------------------------------------------
+# Custom completions (opencode via `opencode --completions zsh`)
+fpath=("$HOME/.zsh/completions" "$HOME/.zfunc" $fpath)
+
 autoload -Uz compinit
 compinit -C -d "${ZINIT[ZCOMPDUMP_PATH]:-$HOME/.local/share/zinit/zcompdump}"
 zinit cdreplay -q 2>/dev/null
@@ -196,21 +204,35 @@ fi
 # Guard against stale SDK root from parent envs
 unset ANDROID_SDK_ROOT
 export ANDROID_HOME="$PREFIX/opt/android-sdk"
-export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/29.0.14206865"
-export ANDROID_USER_HOME="$HOME/.android"
+export ANDROID_NDK_HOME="$ANDROID_HOME/ndk"
 export GRADLE_USER_HOME="$HOME/.gradle"
 [[ -d "$ANDROID_HOME/cmdline-tools/latest/bin" ]] && path=("$ANDROID_HOME/cmdline-tools/latest/bin" "$ANDROID_HOME/platform-tools" $path)
-[[ -d "$PREFIX/opt/android-studio/bin" ]] && path+=("$PREFIX/opt/android-studio/bin")
 export CHROME_EXECUTABLE=/data/data/com.termux/files/usr/bin/chromium-browser
 # -----------------------------------------------------------------------------
-# 10. Shell completions (lazy: guarded; each forks - keep list minimal)
+# 10. Shell completions (guarded; slow generators are CACHED)
 # -----------------------------------------------------------------------------
-(( $+commands[omp] )) && eval "$(omp completions zsh)"
-(( $+commands[gh] )) && eval "$(gh completion -s zsh)"
-(( $+commands[rbw] )) && eval "$(rbw gen-completions zsh)"
-(( $+commands[dev] )) && eval "$(dev completion zsh)"
+# Forking a tool to emit completion code costs startup time, and the output is
+# static. Cache it under ~/.cache/zsh/completions and regenerate only when the
+# tool binary changes (mtime). `rea` is a Node script (~1s) - caching it removed
+# ~1s from every shell start. Delete the cache dir to force a refresh.
+_zsh_cached_completion() {
+  # $1 = cache name, $2 = tool path (for mtime check), rest = generator command
+  local name=$1 cmd=$2; shift 2
+  local file="$HOME/.cache/zsh/completions/$name.zsh"
+  if [[ ! -s $file || ( -n $cmd && $cmd -nt $file ) ]]; then
+    mkdir -p "${file:h}" 2>/dev/null
+    "$@" > "$file" 2>/dev/null || rm -f "$file"
+  fi
+  [[ -s $file ]] && source "$file"
+}
+
+(( $+commands[omp] ))  && eval "$(omp completions zsh)"
+(( $+commands[rbw] ))  && eval "$(rbw gen-completions zsh)"
+(( $+commands[dev] ))  && eval "$(dev completion zsh)"
 (( $+commands[pnpm] )) && eval "$(pnpm completion zsh)"
 (( $+commands[mise] )) && eval "$(mise activate zsh)"
+(( $+commands[gh] ))   && _zsh_cached_completion gh  "$commands[gh]"  gh completion -s zsh
+(( $+commands[rea] ))  && _zsh_cached_completion rea "$commands[rea]" rea completions zsh
 # zoxide init lives in ~/.shell_rc_content - guard there if slow:
 # (( $+commands[zoxide] )) && eval "$(zoxide init --cmd cd zsh)"
 
@@ -240,3 +262,18 @@ alias oc="opencode"
 # 14. Local overrides (not in git)
 # -----------------------------------------------------------------------------
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local" || true
+[[ -f "$HOME/bin/env" ]] && . "$HOME/bin/env"
+
+# opencode tmp dir
+# Scoped to opencode only. Do NOT export TMPDIR globally: the Termux X11
+# server writes its socket under $TMPDIR while X clients (libxcb) always look
+# in $PREFIX/tmp/.X11-unix, so a global override makes DISPLAY :0 unreachable.
+export BUN_TMPDIR=$HOME/.tmp
+opencode() {
+  TMPDIR="$HOME/.tmp" XDG_RUNTIME_DIR="$HOME/.tmp" command opencode "$@"
+}
+
+[ -f "$PREFIX/etc/profile.d/flutter.sh" ] && source "$PREFIX/etc/profile.d/flutter.sh"
+
+# homebrew-termux
+export PATH="/data/data/com.termux/files/home/brew/bin:$PATH"
