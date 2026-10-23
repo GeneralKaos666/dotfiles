@@ -1,5 +1,7 @@
 # local brainstorming specs — never pushed (per user request)
-docs/superpowers/
+docs/ideas/
+docs/specs/
+docs/plans/
 .superpowers/
 
 # local machine backups — never commit (install.sh uses ~/.dotfiles.bak-*, not ./backups/)
