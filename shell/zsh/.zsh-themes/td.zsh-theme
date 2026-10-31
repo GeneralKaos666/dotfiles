@@ -205,6 +205,11 @@ add-zsh-hook preexec _td_preexec
 add-zsh-hook precmd  _td_precmd
 add-zsh-hook chpwd   _td_chpwd
 
+# Plugins sourced before this file (zinit, autosuggestions) register their own
+# precmd hooks and clobber $?, so the status must be captured first. Later
+# registrations append, which keeps this one at the front.
+precmd_functions=(_td_precmd ${precmd_functions:#_td_precmd})
+
 PROMPT='
 %B%F{green}╭─%b%f %F{blue}[%f${TD_USERHOST} %F{yellow}${TD_DISTRO_ICON}%f%F{blue}]%f %F{blue}[%f%F{yellow}%~%f%F{blue}]%f${TD_GIT_SEG}${TD_DUR}${TD_VENV}${TD_JOBS}
 %B%F{green}╰─%b%f${TD_SYMBOL} '
