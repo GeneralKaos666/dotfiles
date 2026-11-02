@@ -147,13 +147,35 @@ bindkey "^[[A" history-menu
 unset ZI_REPO
 
 # -----------------------------------------------------------------------------
-# 6. Completion system (cached; restores plugin completions)
+# 6. Completion system (ONE compinit; restores plugin completions)
 # -----------------------------------------------------------------------------
-# Custom completions (opencode via `opencode --completions zsh`)
-fpath=("$HOME/.zsh/completions" "$HOME/.zfunc" $fpath)
+# Every completion dir must be on fpath BEFORE compinit scans it. Adding one
+# later requires a second compinit, and a second compinit throws away every
+# completion registered at runtime (`compdef` from gh/rea/opencode/...), which
+# silently kills tab-completion for those commands.
+#
+# `_uu-[` (uutils-coreutils) is a valid filename but compinit writes it into the
+# dump as a bare autoload word, and zsh then parses it as a glob, failing with
+# "bad pattern: _uu-[" on every start. compinit maps commands from the file's
+# #compdef line, not its name, so the rename is cosmetic.
+_sf="$PREFIX/share/zsh/site-functions"
+[[ -f "$_sf/_uu-[" && -w "$_sf" ]] && mv "$_sf/_uu-[" "$_sf/_uu-bracket" 2>/dev/null
+unset _sf
+
+fpath=(
+  "$HOME/.zsh/completions"          # opencode (opencode --completions zsh)
+  "$HOME/.zfunc"
+  "$PREFIX/share/zsh/site-functions"  # flutter, dart, adb, gh, uu-*, ...
+  # zinit's as'completion' ice never registers these two; put them on fpath.
+  "$HOME/.local/share/zinit/snippets/OMZP::pip/_pip"
+  "$HOME/.local/share/zinit/snippets/OMZP::terraform/_terraform"
+  $fpath
+)
 
 autoload -Uz compinit
-compinit -C -d "${ZINIT[ZCOMPDUMP_PATH]:-$HOME/.local/share/zinit/zcompdump}"
+# No -C: -C trusts the dump blindly, so new/changed completion files never get
+# picked up. Without it compinit rescans only when fpath actually changed.
+compinit -d "${ZINIT[ZCOMPDUMP_PATH]:-$HOME/.local/share/zinit/zcompdump}"
 zinit cdreplay -q 2>/dev/null
 
 # -----------------------------------------------------------------------------
