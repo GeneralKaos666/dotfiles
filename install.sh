@@ -22,7 +22,7 @@ Manual install with cp from "$DOTFILES":
   mkdir -p "\$HOME/.termux/colors" "\$HOME/.config/fastfetch" "\$HOME/.config/nvim"
   cp "$DOTFILES/termux/termux.properties" "\$HOME/.termux/"
   cp "$DOTFILES/termux/colors/"*.properties "\$HOME/.termux/colors/"
-  cp "$DOTFILES/termux/colors/silkcircuit-vibrant.properties" "\$HOME/.termux/colors.properties"
+  cp "$DOTFILES/termux/colors/violet-overdrive.properties" "\$HOME/.termux/colors.properties"
   cp "$DOTFILES/termux/font.ttf" "\$HOME/.termux/font.ttf"
   cp "$DOTFILES/fastfetch/config.jsonc" "\$HOME/.config/fastfetch/"
   cp -r "$DOTFILES/nvim/"* "\$HOME/.config/nvim/"
@@ -76,9 +76,9 @@ for f in "$DOTFILES"/termux/colors/*; do
 	[ -e "$f" ] || continue
 	backup_copy "$f" "$HOME/.termux/colors/$(basename "$f")"
 done
-# Vibrant palette as the active colors.properties — plain cp via backup_copy,
+# Default palette as the active colors.properties — plain cp via backup_copy,
 # so any pre-existing symlink is moved aside and the result is a regular file.
-backup_copy "$DOTFILES/termux/colors/silkcircuit-vibrant.properties" "$HOME/.termux/colors.properties"
+backup_copy "$DOTFILES/termux/colors/violet-overdrive.properties" "$HOME/.termux/colors.properties"
 backup_copy "$DOTFILES/termux/font.ttf" "$HOME/.termux/font.ttf"
 
 # fastfetch.
