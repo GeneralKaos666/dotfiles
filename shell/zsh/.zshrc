@@ -299,3 +299,9 @@ opencode() {
 
 # homebrew-termux
 export PATH="/data/data/com.termux/files/home/brew/bin:$PATH"
+
+# golang
+export PATH="/data/data/com.termux/files/home/go/bin:$PATH"
+
+# Load Fusion environment
+[ -f "$HOME/.fusion/env" ] && . "$HOME/.fusion/env"
